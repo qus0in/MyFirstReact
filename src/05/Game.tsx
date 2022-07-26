@@ -28,10 +28,26 @@ class Game extends React.Component<{}, {
     })
   }
 
+  jumpTo(move: any) {
+    /* TODO */
+  }
+
   render() {
     const history = this.state.history;
     const current = history[history.length - 1]
     const winner = calculateWinner(current.squares)
+
+    const moves = history.map((step: any, move: any) => {
+      const desc = move ? 'Go to move #' + move :
+        'Go to game start';
+      // 컴포넌트 업데이트 시 쓰일 key가 존재해야함
+      return (
+        <li key={move}>
+          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+        </li>
+      )
+    })
+
     let status;
     if (winner) {
       status = 'Winner: ' + winner
@@ -48,7 +64,7 @@ class Game extends React.Component<{}, {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{/* TODO */}</ol>
+          <ol>{moves}</ol>
         </div>
       </div>
     );
