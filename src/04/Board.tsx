@@ -1,20 +1,22 @@
 import React from 'react'
 import Square from './Square'
 
-class Board extends React.Component<{}, { squares: Array<any> }> {
+class Board extends React.Component<{},
+  { squares: Array<any>, xIsNext: boolean }> {
   constructor(props: any) {
     super(props)
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true,
     }
   }
 
   handleClick(i: number) {
     // 배열의 복사본 생성
-    console.log(i)
+    // console.log(i)
     const squares = this.state.squares.slice()
-    squares[i] = 'X'
-    this.setState({ squares: squares })
+    squares[i] = this.state.xIsNext ? 'X' : 'O'
+    this.setState({ squares: squares, xIsNext: !this.state.xIsNext, })
   }
 
   renderSquare(i: number) {
@@ -26,7 +28,8 @@ class Board extends React.Component<{}, { squares: Array<any> }> {
   }
 
   render() {
-    const status = 'Next player: X';
+    // const status = 'Next player: X';
+    const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
     return (
       <div>
